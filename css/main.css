@@ -1,0 +1,310 @@
+/* ============================================================
+   WOWVote — WOWD.LAB 디자인 시스템
+   ============================================================
+   브랜드 컬러·간격·타이포를 CSS 변수로 정의해두고
+   index.html / present.html이 공유합니다.
+   ============================================================ */
+
+/* ---- 디자인 토큰 (브랜드 가이드) ---- */
+:root {
+  --color-primary: #50676a; /* 청록 — 메인 */
+  --color-accent: #f29b2f; /* 주황 — 강조·CTA */
+  --color-dark: #231f20; /* 본문 텍스트 */
+  --color-bg: #fafaf8; /* 페이지 배경 */
+  --color-surface: #ffffff; /* 카드 배경 */
+  --color-border: #e8e5df; /* 박스 경계 */
+  --color-muted: #8a8a85; /* 보조 텍스트(시간 등) */
+
+  --radius: 12px;
+  --gap: 16px;
+  --maxw: 640px; /* 청중 화면 최대 폭 (모바일 우선) */
+
+  --shadow: 0 1px 3px rgba(35, 31, 32, 0.06);
+}
+
+/* ---- 리셋 ---- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%; /* 모바일에서 폰트 자동확대 방지 */
+}
+
+body {
+  font-family: "Pretendard Variable", Pretendard, -apple-system,
+    BlinkMacSystemFont, system-ui, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-dark);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 15px; /* 모바일 본문 15px (브랜드 가이드) */
+  }
+}
+
+/* ---- 레이아웃 ---- */
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 24px 20px 80px;
+}
+
+/* ---- 헤더 ---- */
+.app-header {
+  margin-bottom: 28px;
+}
+.app-header .brand {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: -0.02em;
+}
+.app-header .brand .v {
+  color: var(--color-accent); /* WOWVote의 V를 강조 */
+}
+.app-header .subtitle {
+  margin-top: 4px;
+  color: var(--color-muted);
+  font-size: 15px;
+}
+
+/* ---- 질문 작성 폼 ---- */
+.ask-form {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+  margin-bottom: 28px;
+}
+.ask-form textarea {
+  width: 100%;
+  min-height: 80px;
+  resize: vertical;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px;
+  font: inherit;
+  color: var(--color-dark);
+  background: var(--color-bg);
+}
+.ask-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+.ask-form .form-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-top: 12px;
+}
+.ask-form input[type="text"] {
+  flex: 1;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  font: inherit;
+  background: var(--color-bg);
+}
+.ask-form input[type="text"]:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+/* ---- 버튼 ---- */
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: opacity 0.15s;
+}
+.btn-primary:hover {
+  opacity: 0.9;
+}
+.btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ---- 목록 헤더 (개수 + 정렬 토글) ---- */
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.list-header .count {
+  font-weight: 600;
+}
+.sort-toggle {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 20px;
+  padding: 6px 14px;
+  font: inherit;
+  font-size: 14px;
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.sort-toggle:hover {
+  border-color: var(--color-primary);
+}
+
+/* ---- 질문 카드 ---- */
+.question-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  list-style: none;
+}
+.question-card {
+  display: flex;
+  gap: 14px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow);
+}
+.question-card .like-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  flex-shrink: 0;
+}
+.like-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  width: 44px;
+  height: 44px;
+  font-size: 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+.like-btn:hover {
+  border-color: var(--color-accent);
+}
+.like-btn.liked {
+  background: #fff3e6;
+  border-color: var(--color-accent);
+}
+.like-count {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+.question-card .body {
+  flex: 1;
+  min-width: 0;
+}
+.question-card .content {
+  word-break: break-word;
+  white-space: pre-wrap;
+}
+.question-card .meta {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--color-muted);
+}
+
+/* ---- 빈 상태 / 로딩 ---- */
+.empty-state,
+.loading-state {
+  text-align: center;
+  color: var(--color-muted);
+  padding: 48px 20px;
+}
+
+/* ============================================================
+   발표자 뷰 (present.html) — 큰 화면용
+   ============================================================ */
+body.present {
+  background: var(--color-primary);
+  color: #fff;
+}
+.present-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 40px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+.present-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+.present-header .brand {
+  font-size: 36px;
+  font-weight: 700;
+}
+.present-header .brand .v {
+  color: var(--color-accent);
+}
+.present-header .subtitle {
+  margin-top: 6px;
+  font-size: 20px;
+  opacity: 0.8;
+}
+.present-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  list-style: none;
+  flex: 1;
+}
+.present-card {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px 28px;
+}
+.present-card .like-big {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 64px;
+}
+.present-card .like-big .num {
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+.present-card .content {
+  font-size: 26px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+.present-card .meta {
+  margin-top: 8px;
+  font-size: 16px;
+  opacity: 0.7;
+}
+.present-footer {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 18px;
+  opacity: 0.7;
+}

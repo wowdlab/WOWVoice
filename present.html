@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WOWVote · 발표자 뷰</title>
+
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <!-- body.present 클래스로 큰 화면용 스타일 적용 -->
+  <body class="present">
+    <div class="present-wrap">
+      <header class="present-header">
+        <div class="brand">WOW<span class="v">V</span>ote · 받은 질문</div>
+        <p class="subtitle">좋아요가 많은 질문이 위로 올라갑니다</p>
+      </header>
+
+      <ul class="present-list" id="presentList">
+        <li class="empty-state" style="color: rgba(255, 255, 255, 0.7)">
+          불러오는 중...
+        </li>
+      </ul>
+
+      <footer class="present-footer">vote.wowdlab.com</footer>
+    </div>
+
+    <!-- 발표자 뷰: config → client → present (폼·좋아요 로직 불필요) -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+      defer
+    ></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/supabase-client.js" defer></script>
+    <script src="js/present.js" defer></script>
+  </body>
+</html>

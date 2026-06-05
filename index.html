@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WOWVote · 익명 Q&A</title>
+
+    <!-- Pretendard Variable (CDN) -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <main class="container">
+      <!-- 헤더 -->
+      <header class="app-header">
+        <div class="brand">WOW<span class="v">V</span>ote</div>
+        <p class="subtitle">질문을 자유롭게 남겨주세요. 좋은 질문에 좋아요를 눌러주세요.</p>
+      </header>
+
+      <!-- 질문 작성 폼 (Phase 3에서 동작 연결) -->
+      <form class="ask-form" id="askForm">
+        <textarea
+          id="contentInput"
+          placeholder="질문을 입력하세요..."
+          maxlength="500"
+          required
+        ></textarea>
+        <div class="form-row">
+          <input
+            type="text"
+            id="nameInput"
+            placeholder="이름 (선택 — 비워두면 익명)"
+            maxlength="40"
+          />
+          <button type="submit" class="btn-primary" id="submitBtn">
+            질문하기 →
+          </button>
+        </div>
+      </form>
+
+      <!-- 목록 헤더: 개수 + 정렬 토글 (Phase 4에서 동작 연결) -->
+      <div class="list-header">
+        <span class="count" id="countLabel">받은 질문</span>
+        <button class="sort-toggle" id="sortToggle">좋아요순 ▼</button>
+      </div>
+
+      <!-- 질문 목록 (Phase 4에서 렌더) -->
+      <ul class="question-list" id="questionList">
+        <li class="loading-state" id="loadingState">불러오는 중...</li>
+      </ul>
+    </main>
+
+    <!-- ============================================================
+         스크립트 로드 순서 (모두 defer — 파싱 후 순서대로 실행)
+         1) Supabase JS 라이브러리 (CDN)
+         2) config.js          — 본인 키 (gitignore)
+         3) supabase-client.js — 클라이언트 초기화 + 세션
+         4) likes.js           — 좋아요 로직
+         5) questions.js       — 질문 작성·조회 + 앱 부트스트랩
+         ============================================================ -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+      defer
+    ></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/supabase-client.js" defer></script>
+    <script src="js/likes.js" defer></script>
+    <script src="js/questions.js" defer></script>
+  </body>
+</html>
