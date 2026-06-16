@@ -6,10 +6,9 @@
 // (C에서 Supabase Realtime으로 교체 예정)
 // ============================================================
 
-const POLL_INTERVAL_MS = 5000; // 5초마다 갱신
-const MAX_QUESTIONS = 12; // 화면에 너무 많이 띄우지 않도록 상위 N개만
+const POLL_INTERVAL_MS = 5000;
+const MAX_QUESTIONS = 12;
 
-// XSS 방지 (questions.js와 동일 로직 — 발표자 뷰는 독립 로드)
 function escapeHtml(str) {
   if (str == null) return "";
   return String(str)
@@ -32,6 +31,33 @@ function timeAgo(isoString) {
 }
 
 // ------------------------------------------------------------
+// QR 코드 생성 — 청중이 접속할 URL을 QR로 표시
+// ------------------------------------------------------------
+// present.html에서 진행자가 청중에게 보여주는 용도.
+// present 페이지 URL이 아닌 index(청중 입력) 페이지 URL을 QR로 만듦.
+function renderQRCode() {
+  const code = currentSession.code;
+  const base = window.location.origin +
+    window.location.pathname.replace(/present\.html$/, "");
+  const audienceUrl = code !== CONFIG.DEFAULT_SESSION_CODE
+    ? `${base}?code=${encodeURIComponent(code)}`
+    : base;
+
+  // 푸터 URL 텍스트 업데이트
+  document.getElementById("footerUrl").textContent = audienceUrl;
+
+  // QR 코드 생성 (qrcode-generator 라이브러리)
+  try {
+    const qr = qrcode(0, "M");
+    qr.addData(audienceUrl);
+    qr.make();
+    document.getElementById("qrCode").innerHTML = qr.createSvgTag(4, 0);
+  } catch (e) {
+    console.warn("QR 코드 생성 실패:", e);
+  }
+}
+
+// ------------------------------------------------------------
 // 좋아요순 상위 질문 조회 후 렌더
 // ------------------------------------------------------------
 async function refreshPresent() {
@@ -39,7 +65,7 @@ async function refreshPresent() {
 
   try {
     const { data, error } = await sb
-      .from("questions")
+      .from("voice_questions")
       .select("id, content, author_name, likes_count, created_at")
       .eq("session_id", currentSession.id)
       .eq("is_hidden", false)
@@ -77,11 +103,12 @@ async function refreshPresent() {
 }
 
 // ------------------------------------------------------------
-// 부트스트랩: 세션 로드 → 첫 렌더 → 5초마다 polling
+// 부트스트랩: 세션 로드 → QR 생성 → 첫 렌더 → 5초마다 polling
 // ------------------------------------------------------------
 async function initPresent() {
   try {
     await loadDefaultSession();
+    renderQRCode();
     await refreshPresent();
     setInterval(refreshPresent, POLL_INTERVAL_MS);
   } catch (err) {

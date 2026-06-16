@@ -1,13 +1,13 @@
 # Current Status
 
-이 파일은 WOWVote 작업 진행 상태를 기록합니다. Claude Code 세션이 끊겨도 이 파일 하나만 읽으면 바로 이어 작업할 수 있도록 매 Phase 끝날 때마다 업데이트합니다.
+이 파일은 WOWVoice 작업 진행 상태를 기록합니다. Claude Code 세션이 끊겨도 이 파일 하나만 읽으면 바로 이어 작업할 수 있도록 매 Phase 끝날 때마다 업데이트합니다.
 
 ---
 
 ## 📋 프로젝트 정보
 
-- **프로젝트명**: WOWVote
-- **도메인**: vote.wowdlab.com (배포 예정)
+- **프로젝트명**: WOWVoice
+- **도메인**: voice.wowdlab.com (배포 예정)
 - **작업 시작일**: 2026-06-05
 - **GitHub 레포**: (작업 시작 시 채워넣기, 예: github.com/WOWD-LAB/wowvote)
 - **현재 시나리오**: A (슬라이도 핵심만)
@@ -18,8 +18,8 @@
 ## ✅ 완료된 작업
 
 ### 사전 결정 (Phase 1 시작 전 완료)
-- [x] 서비스명: **WOWVote**
-- [x] 도메인: **vote.wowdlab.com**
+- [x] 서비스명: **WOWVoice**
+- [x] 도메인: **voice.wowdlab.com**
 - [x] 핵심 가치: "QR 한 번이면 끝나는 익명 Q&A. 좋은 질문이 자연스럽게 위로."
 - [x] 데이터 모델: sessions 테이블 처음부터 포함 (B/C 확장 대비)
 - [x] 작성자 익명성: 선택 익명 (이름 입력 옵션)
@@ -74,7 +74,7 @@
 
 ### 그 다음 (Phase 1 검증 후)
 - QR 코드 안내 방식 확정 (A는 외부 생성기, B에서 내장)
-- Vercel 배포 + `vote.wowdlab.com` 연결
+- Vercel 배포 + `voice.wowdlab.com` 연결
 - README의 셋업 단계를 `.env` → `config.js` 패턴에 맞춰 정리
 
 ---
@@ -90,7 +90,7 @@
   
 - [ ] **default 세션 코드 이름**
   - 현재 안: "default"
-  - 다른 안: "WOWVote", "main", "v1"
+  - 다른 안: "WOWVoice", "main", "v1"
   - **추천**: "default" (가장 명확)
 
 - [ ] **`/present` 페이지 자동 갱신 방식**

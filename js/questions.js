@@ -66,7 +66,7 @@ async function submitQuestion(event) {
   submitBtn.textContent = "전송 중...";
 
   try {
-    const { error } = await sb.from("questions").insert({
+    const { error } = await sb.from("voice_questions").insert({
       session_id: currentSession.id, // 항상 현재 세션으로 (A는 default)
       content: content,
       author_name: authorName,
@@ -95,7 +95,7 @@ async function loadQuestions() {
 
   try {
     let query = sb
-      .from("questions")
+      .from("voice_questions")
       .select("id, content, author_name, likes_count, created_at")
       .eq("session_id", currentSession.id) // 항상 세션 필터 (확장성 원칙)
       .eq("is_hidden", false); // B 모더레이션 대비 — 숨김 질문 제외
@@ -190,12 +190,17 @@ async function initApp() {
   try {
     await loadDefaultSession(); // supabase-client.js
 
+    // 기본 세션이 아닌 경우 행사 이름 표시 (세션 분리 지원)
+    const sessionNameEl = document.getElementById("sessionName");
+    if (sessionNameEl && currentSession.code !== CONFIG.DEFAULT_SESSION_CODE) {
+      sessionNameEl.textContent = currentSession.title;
+    }
+
     document.getElementById("askForm").addEventListener("submit", submitQuestion);
     document.getElementById("sortToggle").addEventListener("click", toggleSort);
 
     await loadQuestions();
   } catch (err) {
-    // loadDefaultSession 내부에서 이미 안내 alert를 띄움
     console.error("앱 초기화 실패:", err);
   }
 }

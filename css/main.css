@@ -1,5 +1,5 @@
 /* ============================================================
-   WOWVote — WOWD.LAB 디자인 시스템
+   WOWVoice — WOWD.LAB 디자인 시스템
    ============================================================
    브랜드 컬러·간격·타이포를 CSS 변수로 정의해두고
    index.html / present.html이 공유합니다.
@@ -69,7 +69,17 @@ body {
   letter-spacing: -0.02em;
 }
 .app-header .brand .v {
-  color: var(--color-accent); /* WOWVote의 V를 강조 */
+  color: var(--color-accent); /* WOWVoice의 V를 강조 */
+}
+.app-header .session-name {
+  margin-top: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(80, 103, 106, 0.1);
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
 }
 .app-header .subtitle {
   margin-top: 4px;
@@ -303,8 +313,30 @@ body.present {
   opacity: 0.7;
 }
 .present-footer {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin-top: 40px;
-  font-size: 18px;
-  opacity: 0.7;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+}
+.footer-url-wrap {
+  font-size: 20px;
+  opacity: 0.85;
+}
+.footer-url-wrap .footer-hint {
+  font-size: 14px;
+  opacity: 0.6;
+  margin-top: 4px;
+}
+.qr-code-wrap {
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.qr-code-wrap svg {
+  display: block;
 }

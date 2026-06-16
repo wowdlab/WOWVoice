@@ -18,7 +18,11 @@ window.WOWVOTE_CONFIG = {
   // 위치: Supabase 콘솔 > Settings > API > Project API keys > anon public
   SUPABASE_ANON_KEY: "eyJhbGciOi...",
 
-  // A에서 사용할 기본 세션 코드 (변경 불필요)
-  // B/C에서 다중 세션으로 확장할 때 이 값으로 세션을 분기합니다.
+  // 기본 세션 코드 (변경 불필요)
+  // B/C에서 다중 세션으로 확장할 때 URL ?code= 파라미터로 분기됩니다.
   DEFAULT_SESSION_CODE: "default",
+
+  // 관리자 비밀번호 — admin.html 접속 시 사용
+  // ⚠️ config.js는 .gitignore에 포함되어 git에 올라가지 않습니다.
+  ADMIN_PASSWORD: "여기에-비밀번호-입력",
 };

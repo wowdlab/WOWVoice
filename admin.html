@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>WOWVoice · 관리자</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/variable/pretendardvariable.min.css"
+    />
+    <link rel="stylesheet" href="css/main.css" />
+    <style>
+      /* 관리자 전용 스타일 */
+      body { background: #f4f4f0; }
+
+      /* 로그인 화면 */
+      .login-wrap {
+        display: flex; flex-direction: column; align-items: center;
+        justify-content: center; min-height: 100vh; gap: 12px;
+      }
+      .login-card {
+        background: #fff; border: 1px solid var(--color-border);
+        border-radius: 16px; padding: 40px 36px;
+        width: 100%; max-width: 380px; text-align: center;
+        box-shadow: 0 4px 16px rgba(35,31,32,0.08);
+      }
+      .login-card .brand { font-size: 22px; font-weight: 700; color: var(--color-primary); }
+      .login-card .brand .v { color: var(--color-accent); }
+      .login-card p { margin: 8px 0 24px; color: var(--color-muted); font-size: 14px; }
+      .login-card input {
+        width: 100%; border: 1px solid var(--color-border); border-radius: 8px;
+        padding: 12px 14px; font: inherit; margin-bottom: 12px;
+        background: var(--color-bg);
+      }
+      .login-card input:focus { outline: none; border-color: var(--color-primary); }
+
+      /* 관리자 패널 */
+      .admin-panel { display: none; max-width: 900px; margin: 0 auto; padding: 24px 20px 80px; }
+
+      /* 관리자 헤더 */
+      .admin-header {
+        display: flex; align-items: center; gap: 16px;
+        flex-wrap: wrap; margin-bottom: 28px;
+      }
+      .admin-header .brand { font-size: 20px; font-weight: 700; color: var(--color-primary); flex: 1; }
+      .admin-header .brand .v { color: var(--color-accent); }
+      .admin-header select {
+        border: 1px solid var(--color-border); border-radius: 8px;
+        padding: 8px 12px; font: inherit; background: #fff;
+        color: var(--color-dark); min-width: 200px;
+      }
+      .btn-sm {
+        border: 1px solid var(--color-border); border-radius: 8px;
+        padding: 8px 14px; font: inherit; font-size: 14px;
+        cursor: pointer; background: #fff; transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .btn-sm:hover { border-color: var(--color-primary); }
+      .btn-accent { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+      .btn-accent:hover { opacity: 0.9; }
+      .btn-danger { border-color: #e05a5a; color: #e05a5a; }
+      .btn-danger:hover { background: #fff5f5; }
+      .btn-answered { background: #e8f5e9; border-color: #4caf50; color: #2e7d32; }
+      .btn-hidden { background: #f5f5f5; border-color: #9e9e9e; color: #616161; }
+
+      /* 세션 정보 카드 */
+      .session-info {
+        background: #fff; border: 1px solid var(--color-border);
+        border-radius: 12px; padding: 20px 24px;
+        margin-bottom: 20px; display: none;
+      }
+      .session-info .info-row {
+        display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+      }
+      .session-info .info-label { font-size: 13px; color: var(--color-muted); }
+      .session-info .audience-url {
+        font-weight: 600; color: var(--color-primary);
+        text-decoration: none; word-break: break-all;
+      }
+      .session-info .audience-url:hover { text-decoration: underline; }
+
+      /* 새 세션 폼 */
+      .create-form {
+        display: none; background: #fff; border: 1px solid var(--color-border);
+        border-radius: 12px; padding: 20px 24px; margin-bottom: 20px;
+      }
+      .create-form h3 { font-size: 15px; margin-bottom: 16px; color: var(--color-dark); }
+      .create-form .form-row { display: flex; gap: 10px; flex-wrap: wrap; }
+      .create-form input {
+        flex: 1; min-width: 140px; border: 1px solid var(--color-border);
+        border-radius: 8px; padding: 10px 12px; font: inherit;
+        background: var(--color-bg);
+      }
+      .create-form input:focus { outline: none; border-color: var(--color-primary); }
+
+      /* 질문 목록 */
+      .question-panel h3 {
+        font-size: 15px; color: var(--color-dark); margin-bottom: 14px;
+        display: flex; align-items: center; gap: 10px;
+      }
+      .question-panel h3 .count-badge {
+        font-size: 13px; color: var(--color-muted); font-weight: 400;
+      }
+      .admin-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+      .admin-card {
+        background: #fff; border: 1px solid var(--color-border);
+        border-radius: 12px; padding: 16px 18px;
+        display: flex; gap: 16px; align-items: flex-start;
+        transition: opacity 0.15s;
+      }
+      .admin-card.hidden-q { opacity: 0.5; }
+      .admin-card-body { flex: 1; min-width: 0; }
+      .admin-content { word-break: break-word; white-space: pre-wrap; margin-bottom: 6px; }
+      .admin-meta { font-size: 13px; color: var(--color-muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+      .badge {
+        display: inline-block; font-size: 11px; font-weight: 600;
+        padding: 2px 8px; border-radius: 20px;
+      }
+      .badge-answered { background: #e8f5e9; color: #2e7d32; }
+      .badge-hidden { background: #f5f5f5; color: #616161; }
+      .admin-card-actions { display: flex; gap: 6px; flex-direction: column; flex-shrink: 0; }
+      .empty { text-align: center; color: var(--color-muted); padding: 40px 20px; }
+      .loading { text-align: center; color: var(--color-muted); padding: 20px; }
+    </style>
+  </head>
+  <body>
+
+    <!-- 로그인 화면 -->
+    <div class="login-wrap" id="loginScreen">
+      <div class="login-card">
+        <div class="brand">WOW<span class="v">V</span>oice</div>
+        <p>관리자 전용 페이지입니다</p>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="관리자 비밀번호"
+          autocomplete="current-password"
+        />
+        <button class="btn-primary" style="width:100%" onclick="checkLogin()">로그인</button>
+      </div>
+    </div>
+
+    <!-- 관리자 패널 -->
+    <div class="admin-panel" id="adminPanel">
+
+      <!-- 헤더 -->
+      <div class="admin-header">
+        <div class="brand">WOW<span class="v">V</span>oice <span style="font-weight:400;font-size:14px;color:var(--color-muted)">관리자</span></div>
+        <select id="sessionSelect" onchange="onSessionChange()"></select>
+        <button class="btn-sm" onclick="toggleCreateForm()">+ 새 세션</button>
+        <button class="btn-sm btn-danger" onclick="logout()">로그아웃</button>
+      </div>
+
+      <!-- 새 세션 만들기 폼 -->
+      <div class="create-form" id="createForm">
+        <h3>새 세션 만들기</h3>
+        <div class="form-row">
+          <input type="text" id="newCode" placeholder="세션 코드 (예: DAEGU0518)" maxlength="30" />
+          <input type="text" id="newTitle" placeholder="행사 이름 (예: 대구 시민 포럼)" maxlength="80" />
+          <button class="btn-sm btn-accent" onclick="createSession()">만들기</button>
+        </div>
+      </div>
+
+      <!-- 선택된 세션 정보 + CSV 다운로드 -->
+      <div class="session-info" id="sessionActions">
+        <div class="info-row">
+          <span class="info-label">청중 URL</span>
+          <a href="#" id="audienceUrl" class="audience-url" target="_blank"></a>
+          <button class="btn-sm" onclick="copyUrl()">복사</button>
+          <button class="btn-sm btn-accent" onclick="downloadCSV()" style="margin-left:auto">CSV 다운로드</button>
+        </div>
+      </div>
+
+      <!-- 질문 목록 -->
+      <div class="question-panel">
+        <h3>
+          질문 목록
+          <span class="count-badge" id="questionCountLabel"></span>
+        </h3>
+        <ul class="admin-list" id="adminQuestionList">
+          <li class="empty">세션을 선택해주세요.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2" defer></script>
+    <script src="js/config.js" defer></script>
+    <script src="js/supabase-client.js" defer></script>
+    <script src="js/admin.js" defer></script>
+  </body>
+</html>

@@ -56,7 +56,7 @@ async function addLike(questionId) {
 
   try {
     const { error } = await sb
-      .from("likes")
+      .from("voice_likes")
       .insert({ question_id: questionId, voter_fingerprint: fingerprint });
 
     if (error) {

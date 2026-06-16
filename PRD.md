@@ -1,4 +1,4 @@
-# PRD — WOWVote
+# PRD — WOWVoice
 
 > **QR 한 번이면 끝나는 익명 Q&A. 좋은 질문이 자연스럽게 위로.**
 
@@ -7,7 +7,7 @@
 ## 1. 서비스 비전
 
 ### 무엇인가
-**WOWVote**는 세미나·포럼·심포지엄·시민 워크숍 진행자가 청중에게서 실시간으로 질문을 받고, 청중이 좋은 질문에 추천(좋아요)을 눌러서 자연스럽게 우선순위가 정해지는 익명 Q&A 도구다.
+**WOWVoice**는 세미나·포럼·심포지엄·시민 워크숍 진행자가 청중에게서 실시간으로 질문을 받고, 청중이 좋은 질문에 추천(좋아요)을 눌러서 자연스럽게 우선순위가 정해지는 익명 Q&A 도구다.
 
 ### 왜 만드는가
 - 시민 워크숍·기업 세미나에서 유료 도구(Slido, Mentimeter)에 비용을 쓰는 진행자가 많다
@@ -25,7 +25,7 @@
 - 좋은 질문에 공감 표시하고 싶음
 
 ### 도메인
-**`vote.wowdlab.com`** — WOWD.LAB의 공식 자산으로 운영
+**`voice.wowdlab.com`** — WOWD.LAB의 공식 자산으로 운영
 
 ### 차별화 포인트
 1. **무료 + 오픈소스** — 유료 도구 대체
@@ -76,7 +76,7 @@
 
 ```
 [진행자]
-1. vote.wowdlab.com 접속
+1. voice.wowdlab.com 접속
 2. QR 코드 생성 (URL을 QR로 변환)
 3. 청중에게 QR 또는 URL 공유
 4. (옵션) /present 화면을 빔프로젝터로 띄우기
@@ -191,7 +191,7 @@ CREATE TABLE likes (
 
 ### 호스팅
 - **Vercel** (정적 사이트로 배포)
-- 도메인: `vote.wowdlab.com`
+- 도메인: `voice.wowdlab.com`
 
 ### 보안 키
 - **anon public 키**만 클라이언트에서 사용
@@ -279,7 +279,7 @@ CREATE TABLE likes (
 
 ```
 ┌─────────────────────────────────────┐
-│ WOWVote                             │
+│ WOWVoice                             │
 │ 질문을 자유롭게 남겨주세요          │
 ├─────────────────────────────────────┤
 │ ┌─────────────────────────────────┐ │
@@ -303,7 +303,7 @@ CREATE TABLE likes (
 
 ```
 ┌─────────────────────────────────────┐
-│           WOWVote · 받은 질문        │
+│           WOWVoice · 받은 질문        │
 │                                     │
 │  ❤️ 5  강의 자료 공유되나요?         │
 │         김OO · 3분 전               │
@@ -311,7 +311,7 @@ CREATE TABLE likes (
 │  ❤️ 3  AI 시대 강사의 미래는...      │
 │         익명 · 5분 전               │
 │                                     │
-│           vote.wowdlab.com          │
+│           voice.wowdlab.com          │
 └─────────────────────────────────────┘
 ```
 
@@ -345,14 +345,14 @@ CREATE TABLE likes (
 
 ## 10. 결정 보류 사항 (Phase 1 시작 전 확인)
 
-- [x] **서비스명**: WOWVote
-- [x] **도메인**: vote.wowdlab.com
+- [x] **서비스명**: WOWVoice
+- [x] **도메인**: voice.wowdlab.com
 - [x] **작성자 익명성**: 선택 익명 (이름 입력 옵션)
 - [x] **호스트 인증**: A에서는 없음, B에서 추가
 - [x] **데이터 모델**: sessions 처음부터 포함
 - [ ] **QR 코드 생성 위치**: 진행자가 따로 만드는가, 앱 내장하는가
   - 추천: A에서는 외부 QR 생성기 사용 안내, B에서 앱 내장
-- [ ] **운영 시 사용할 default 세션 코드**: "default" / "WOWVote" / 다른 것?
+- [ ] **운영 시 사용할 default 세션 코드**: "default" / "WOWVoice" / 다른 것?
 
 ---
 
@@ -360,7 +360,7 @@ CREATE TABLE likes (
 
 ```sql
 -- ============================================
--- WOWVote 초기 스키마 (A 시나리오용)
+-- WOWVoice 초기 스키마 (A 시나리오용)
 -- B/C 대비 확장 가능 구조
 -- ============================================
 
@@ -400,7 +400,7 @@ CREATE TABLE likes (
 
 -- 4. 기본 세션 1개 삽입
 INSERT INTO sessions (code, title, host_name) 
-VALUES ('default', 'WOWVote 기본 세션', 'WOWD.LAB');
+VALUES ('default', 'WOWVoice 기본 세션', 'WOWD.LAB');
 
 -- 5. RLS 활성화
 ALTER TABLE sessions ENABLE ROW LEVEL SECURITY;

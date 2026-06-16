@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WOWVote · 발표자 뷰</title>
+    <title>WOWVoice · 발표자 뷰</title>
 
     <link
       rel="stylesheet"
@@ -15,7 +15,7 @@
   <body class="present">
     <div class="present-wrap">
       <header class="present-header">
-        <div class="brand">WOW<span class="v">V</span>ote · 받은 질문</div>
+        <div class="brand">WOW<span class="v">V</span>oice · 받은 질문</div>
         <p class="subtitle">좋아요가 많은 질문이 위로 올라갑니다</p>
       </header>
 
@@ -25,12 +25,24 @@
         </li>
       </ul>
 
-      <footer class="present-footer">vote.wowdlab.com</footer>
+      <!-- URL + QR 코드를 나란히 표시 -->
+      <footer class="present-footer">
+        <div class="footer-url-wrap">
+          <span id="footerUrl">voice.wowdlab.com</span>
+          <div class="footer-hint">QR로 접속하세요 →</div>
+        </div>
+        <div id="qrCode" class="qr-code-wrap"></div>
+      </footer>
     </div>
 
     <!-- 발표자 뷰: config → client → present (폼·좋아요 로직 불필요) -->
     <script
       src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"
+      defer
+    ></script>
+    <!-- QR 코드 생성 라이브러리 -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js"
       defer
     ></script>
     <script src="js/config.js" defer></script>
